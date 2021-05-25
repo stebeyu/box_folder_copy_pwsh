@@ -9,6 +9,7 @@ $Timing = Get-Date -Format "dddd MM dd yyyy HHmm"
 $OutputFile = ".\folder_creation_log $Timing.csv" 
 Add-content -path $OutputFile -value "Row,ID,ParentID,AsUser,Name,Status,Message"
 
+
 #Script execution variables
 $timeoutLength = 90 #adjust if needed to avoid 409 operation_blocked_temporary errors
 
@@ -33,7 +34,6 @@ ForEach ($Folder in $folderCreateInput) {
     $createFolder = Invoke-Expression "box folders:copy $FolderID $FolderParent --as-user $FolderAsUser --name $FolderName --json" -ErrorVariable errorReceived 2>$null
 
     #------------------------------------Error Handling Logic below------------------------------------
-    #Didn't use try/catch because using invoke-expression requires you to manually parse the command exit code/response anyway
     
     if($errorReceived){
         $errorMessage = $errorReceived[0] | Out-String
@@ -94,6 +94,7 @@ ForEach ($Folder in $folderCreateInput) {
 
     }
 
+    #if Box CLI command was successful
     elseif ($createFolder){
         $result = $createFolder | ConvertFrom-Json
         $newFolderID = $result."id"
