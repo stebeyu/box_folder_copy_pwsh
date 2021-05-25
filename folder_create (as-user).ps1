@@ -3,7 +3,7 @@
 #Must have PowerShell configured
 #Must have input.csv properly configured
 
-# File system variables
+# File system variables 
 $BaseFilePath = "/Users/steveyu/PowerShell/input.csv" #Enter path to input.csv here
 $Timing = Get-Date -Format "dddd MM dd yyyy HHmm"
 $OutputFile = ".\folder_creation_log $Timing.csv" 
